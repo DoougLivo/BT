@@ -83,45 +83,30 @@ public class UserController {
 	@PostMapping("/insert_userHobby_PT")
 	Map<String, String> insert_user_hobby(@RequestBody UserHDto hDto) {
 		Map<String, String> map = new HashMap<>();
-		System.out.println("취미코드 : "+ hDto.getH_code_id());
+//		System.out.println("@@@@@@@@@@@@ bt 컨트롤러 hDto : "+hDto);
+//		System.out.println("취미코드 : "+ hDto.getH_code_id());
 		try {
+			System.out.println("@@@@@@@@@@@ bt 컨트롤러 hDto : "+ hDto);
 			// 취미 등록
-			if(hDto.getH_code_id() != null) {
-				// 임시로 저장하기 위해 만듬
-				UserHDto newUHDto = new UserHDto();
-				HobbyDto newH_Dto = new HobbyDto();
-				UserDto newU_Dto = new UserDto();
-				System.out.println("전체 취미코드 : " + hDto.getH_code_id());
-				if(hDto.getH_code_id().contains(",")) {
-					String[] hic = hDto.getH_code_id().split(",");
+			// 임시로 저장하기 위해 만듬
+			UserHDto newUHDto = new UserHDto();
+			HobbyDto newH_Dto = new HobbyDto();
+			UserDto newU_Dto = new UserDto();
+			System.out.println("전체 취미코드 : " + hDto.getH_code_id());
+			
+			if(hDto.getH_code_id().contains(",")) {
+				String[] hic = hDto.getH_code_id().split(",");
 					
-					for(int i=0; i<hic.length; i++) {
-						// 임시 변수
-						System.out.println("취미코드"+ (i+1) +": "+hic[i]);
-						hDto.setH_code_id(hic[i]);
-						hDto.setUserId(hDto.getUserId());
-						
-						// h_code_id
-						newH_Dto.setH_code_id(hDto.getH_code_id());
-						newUHDto.setHobbyDto(newH_Dto);
-						
-						// user_id
-						newU_Dto.setUserId(hDto.getUserId());
-						newUHDto.setUserDto(newU_Dto);
-						
-						// 사용자 취미 추가
-						userService.insertHobby(newUHDto);
-					}
-				} else {
+				for(int i=0; i<hic.length; i++) {
 					// 임시 변수
-					System.out.println(hDto.getH_code_id());
-					hDto.setH_code_id(hDto.getH_code_id());
-					hDto.setUserId(hDto.getUserId());
+					System.out.println("취미코드"+ (i+1) +": "+hic[i]);
+//					hDto.setH_code_id(hic[i]);
+//					hDto.setUserId(hDto.getUserId());
 					
 					// h_code_id
-					newH_Dto.setH_code_id(hDto.getH_code_id());
+					newH_Dto.setH_code_id(hic[i]);
 					newUHDto.setHobbyDto(newH_Dto);
-					
+						
 					// user_id
 					newU_Dto.setUserId(hDto.getUserId());
 					newUHDto.setUserDto(newU_Dto);
@@ -129,6 +114,22 @@ public class UserController {
 					// 사용자 취미 추가
 					userService.insertHobby(newUHDto);
 				}
+			} else {
+				// 임시 변수
+//				System.out.println(hDto.getH_code_id());
+//				hDto.setH_code_id(hDto.getH_code_id());
+//				hDto.setUserId(hDto.getUserId());
+					
+				// h_code_id
+				newH_Dto.setH_code_id(hDto.getH_code_id());
+				newUHDto.setHobbyDto(newH_Dto);
+				
+				// user_id
+				newU_Dto.setUserId(hDto.getUserId());
+				newUHDto.setUserDto(newU_Dto);
+				
+				// 사용자 취미 추가
+				userService.insertHobby(newUHDto);
 			}
 			
 //			map.put("msg", "success");
