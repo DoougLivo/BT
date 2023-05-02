@@ -142,8 +142,8 @@ public class UserController {
 	}
 	
 	// 관리자 포털
-	@GetMapping("/admin")
-	Map<String, Object> getList(Model model, @RequestBody String searchKeyword, @RequestBody String userId/*, @RequestParam(required = false, defaultValue = "0", value = "page") int page*/) {
+	@GetMapping("/admin_PT")
+	Map<String, Object> getList(Model model, @RequestBody String searchKeyword, @RequestBody String userId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		// 검색 안했을 때
 		if(searchKeyword == null) {
@@ -337,7 +337,7 @@ public class UserController {
 	
 	// 사용자 삭제
 	@ResponseBody
-	@PostMapping("/admin/delete")
+	@PostMapping("/admin/delete_PT")
 	Map<String, String> deleteUser(@RequestBody UserDto dto) {
 		Map<String, String> map = new HashMap<String, String>();
 		System.out.println("아이디 : " + dto.getUserId());
@@ -358,7 +358,7 @@ public class UserController {
 	
 	// 사용자 취미 삭제
 	@ResponseBody
-	@PostMapping("/admin/deleteHobby")
+	@PostMapping("/admin/deleteHobby_PT")
 	Map<String, String> deleteUser(@RequestBody UserHDtoPK pk) {
 		Map<String, String> map = new HashMap<String, String>();
 		System.out.println("pk : "+ pk);
