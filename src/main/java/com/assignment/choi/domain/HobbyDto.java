@@ -5,13 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor(access=AccessLevel.PUBLIC)
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="HOBBY_TB")

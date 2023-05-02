@@ -79,12 +79,12 @@ public class UserController {
 	}
 	
 	// 사용자 취미 승인 요청
-	@ResponseBody
 	@PostMapping("/insert_userHobby_PT")
 	Map<String, String> insert_user_hobby(@RequestBody UserHDto hDto) {
 		Map<String, String> map = new HashMap<>();
 //		System.out.println("@@@@@@@@@@@@ bt 컨트롤러 hDto : "+hDto);
 //		System.out.println("취미코드 : "+ hDto.getH_code_id());
+		System.out.println("이제 여기에 들어와야 하는데 제발 들어와라");
 		try {
 			System.out.println("@@@@@@@@@@@ bt 컨트롤러 hDto : "+ hDto);
 			// 취미 등록
@@ -100,8 +100,8 @@ public class UserController {
 				for(int i=0; i<hic.length; i++) {
 					// 임시 변수
 					System.out.println("취미코드"+ (i+1) +": "+hic[i]);
-//					hDto.setH_code_id(hic[i]);
-//					hDto.setUserId(hDto.getUserId());
+					hDto.setH_code_id(hic[i]);
+					hDto.setUserId(hDto.getUserId());
 					
 					// h_code_id
 					newH_Dto.setH_code_id(hic[i]);
@@ -112,13 +112,14 @@ public class UserController {
 					newUHDto.setUserDto(newU_Dto);
 					
 					// 사용자 취미 추가
+					System.out.println("@#@#@#@#@#@#@#@# : "+newUHDto);
 					userService.insertHobby(newUHDto);
 				}
 			} else {
 				// 임시 변수
-//				System.out.println(hDto.getH_code_id());
-//				hDto.setH_code_id(hDto.getH_code_id());
-//				hDto.setUserId(hDto.getUserId());
+				System.out.println(hDto.getH_code_id());
+				hDto.setH_code_id(hDto.getH_code_id());
+				hDto.setUserId(hDto.getUserId());
 					
 				// h_code_id
 				newH_Dto.setH_code_id(hDto.getH_code_id());
