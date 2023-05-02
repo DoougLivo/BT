@@ -1,5 +1,6 @@
 package com.assignment.choi.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,60 +79,67 @@ public class UserController {
 		return map;
 	}
 	
-	// 사용자 취미 승인 요청
+	// 사용자 취미 승인 요청   -  못해먹겠다
 	@PostMapping("/insert_userHobby_PT")
 	Map<String, String> insert_user_hobby(@RequestBody UserHDto hDto) {
 		Map<String, String> map = new HashMap<>();
 //		System.out.println("@@@@@@@@@@@@ bt 컨트롤러 hDto : "+hDto);
 //		System.out.println("취미코드 : "+ hDto.getH_code_id());
-		System.out.println("이제 여기에 들어와야 하는데 제발 들어와라");
 		try {
 			System.out.println("@@@@@@@@@@@ bt 컨트롤러 hDto : "+ hDto);
+//			System.out.println("!!!!!!!! 취미 : "+hDto.getHobbyDto().getH_code_id());
+//			System.out.println("!!!!!!!! 유저 : "+hDto.getUserDto().getUserId());
 			// 취미 등록
+			String h_code_id = hDto.getHobbyDto().getH_code_id();
+			System.out.println("1");
+			String userId = hDto.getUserDto().getUserId();
+			System.out.println("2");
+			userService.insertHobby(h_code_id, userId);
+			System.out.println("3");
 			// 임시로 저장하기 위해 만듬
-			UserHDto newUHDto = new UserHDto();
-			HobbyDto newH_Dto = new HobbyDto();
-			UserDto newU_Dto = new UserDto();
-			System.out.println("전체 취미코드 : " + hDto.getH_code_id());
+//			UserHDto newUHDto = new UserHDto();
+//			HobbyDto newH_Dto = new HobbyDto();
+//			UserDto newU_Dto = new UserDto();
+//			System.out.println("전체 취미코드 : " + hDto.getH_code_id());
 			
-			if(hDto.getH_code_id().contains(",")) {
-				String[] hic = hDto.getH_code_id().split(",");
-					
-				for(int i=0; i<hic.length; i++) {
-					// 임시 변수
-					System.out.println("취미코드"+ (i+1) +": "+hic[i]);
-					hDto.setH_code_id(hic[i]);
-					hDto.setUserId(hDto.getUserId());
-					
-					// h_code_id
-					newH_Dto.setH_code_id(hic[i]);
-					newUHDto.setHobbyDto(newH_Dto);
-						
-					// user_id
-					newU_Dto.setUserId(hDto.getUserId());
-					newUHDto.setUserDto(newU_Dto);
-					
-					// 사용자 취미 추가
-					System.out.println("@#@#@#@#@#@#@#@# : "+newUHDto);
-					userService.insertHobby(newUHDto);
-				}
-			} else {
+//			if(hDto.getH_code_id().contains(",")) {
+//				String[] hic = hDto.getH_code_id().split(",");
+//					
+//				for(int i=0; i<hic.length; i++) {
+//					// 임시 변수
+//					System.out.println("취미코드"+ (i+1) +": "+hic[i]);
+//					hDto.setH_code_id(hic[i]);
+//					hDto.setUserId(hDto.getUserId());
+//					
+//					// h_code_id
+//					newH_Dto.setH_code_id(hic[i]);
+//					newUHDto.setHobbyDto(newH_Dto);
+//						
+//					// user_id
+//					newU_Dto.setUserId(hDto.getUserId());
+//					newUHDto.setUserDto(newU_Dto);
+//					
+//					// 사용자 취미 추가
+//					System.out.println("@#@#@#@#@#@#@#@# : "+newUHDto);
+//					userService.insertHobby(newUHDto);
+//				}
+//			} else {
 				// 임시 변수
-				System.out.println(hDto.getH_code_id());
-				hDto.setH_code_id(hDto.getH_code_id());
-				hDto.setUserId(hDto.getUserId());
+//				System.out.println(hDto.getH_code_id());
+//				hDto.setH_code_id(hDto.getH_code_id());
+//				hDto.setUserId(hDto.getUserId());
 					
 				// h_code_id
-				newH_Dto.setH_code_id(hDto.getH_code_id());
-				newUHDto.setHobbyDto(newH_Dto);
+//				newH_Dto.setH_code_id(hDto.getHobbyDto().getH_code_id());
+//				newUHDto.setHobbyDto(hDto.getHobbyDto());
 				
 				// user_id
-				newU_Dto.setUserId(hDto.getUserId());
-				newUHDto.setUserDto(newU_Dto);
+//				newU_Dto.setUserId(hDto.getUserDto().getUserId());
+//				newUHDto.setUserDto(hDto.getUserDto());
 				
 				// 사용자 취미 추가
-				userService.insertHobby(newUHDto);
-			}
+//				userService.insertHobby(hDto);
+//			}
 			
 //			map.put("msg", "success");
 //			map.put("ok", "승인 요청 되었습니다.");
@@ -144,77 +152,79 @@ public class UserController {
 	
 	// 관리자 포털
 	@GetMapping("/admin_PT")
-	Map<String, Object> getList(Model model, @RequestBody String searchKeyword, @RequestBody String userId) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	List<UserDto> getList(Model model, @RequestBody String searchKeyword/*, @RequestBody String userId*/) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		List<UserDto> userList = new ArrayList<UserDto>();
 		// 검색 안했을 때
-		if(searchKeyword == null) {
+//		if(searchKeyword == null) {
 			// 목록
-			List<UserDto> list = userService.getList();
-			model.addAttribute("list", list);
-			map.put("list", list);
+//			model.addAttribute("list", list);
+//		}
+			return userService.getList();
+//			map.put("list", list);
 			
-			// 부서 목록
-			List<DepDto> depList = userService.getDepList();
-			model.addAttribute("depList", depList);
-			map.put("depList", depList);
-			// 취미 목록
-			List<HobbyDto> getHobbyList = userService.getHobbyList();
-			model.addAttribute("getHobbyList", getHobbyList);
-			map.put("getHobbyList", getHobbyList);
-			System.out.println("취미목록 : "+ getHobbyList.size());
-			// 사용자 취미
-			List<UserHDto> viewHList = userService.getHobby(userId);
-			map.put("viewHList", viewHList);
-			System.out.println("취미리스트 갯수 : " + viewHList.size());
-			// 나눠서 저장
-			String hci="";
-			for(int i=0; i < viewHList.size(); i++) {
-				hci += viewHList.get(i).getHobbyDto().getH_code_id();
-			} // viewHList1   viewHList2  
-			model.addAttribute("hci", hci);
-			map.put("hci", hci);
-			System.out.println("hci : "+ hci);
-		} else {  //검색 했을 때
-			String searchKeyword_no_s = searchKeyword.replaceAll("\\s", ""); // 공백 제거
-			// 검색 목록
-			List<UserDto> searchList = userService.searchUser(searchKeyword_no_s);
-			model.addAttribute("searchKeyword", searchKeyword_no_s);
-			map.put("searchKeyword", searchKeyword_no_s);
-			System.out.println("키워드명 : "+ searchKeyword_no_s);
-			System.out.println("검색된 목록 갯수 : " + searchList.size());
-			
-			// 사용자 정보
-			if(userId != "") {  //상세정보 눌렀을 때
-				// 사용자 부서
-				UserDto view = userService.getView(userId);
-				model.addAttribute("view", view);
-				map.put("view", view);
-				System.out.println("부서 : " + view.getDepDto().getDep_id());
-				// 부서 목록
-				List<DepDto> depList = userService.getDepList();
-				model.addAttribute("depList", depList);
-				map.put("depList", depList);
-				// 취미 목록
-				List<HobbyDto> getHobbyList = userService.getHobbyList();
-				model.addAttribute("getHobbyList", getHobbyList);
-				map.put("getHobbyList", getHobbyList);
-				System.out.println("취미목록 : "+ getHobbyList.size());
-				// 사용자 취미
-				List<UserHDto> viewHList = userService.getHobby(userId);
-				map.put("viewHList", viewHList);
-				System.out.println("취미리스트 갯수 : " + viewHList.size());
-				// 나눠서 저장
-				String hci="";
-				for(int i=0; i < viewHList.size(); i++) {
-					hci += viewHList.get(i).getHobbyDto().getH_code_id();
-				} // viewHList1   viewHList2  
-				model.addAttribute("hci", hci);
-				map.put("hci", hci);
-				System.out.println("hci : "+ hci);
-			}
-		}
-
-		return map;
+//			// 부서 목록
+//			List<DepDto> depList = userService.getDepList();
+//			model.addAttribute("depList", depList);
+//			map.put("depList", depList);
+//			// 취미 목록
+//			List<HobbyDto> getHobbyList = userService.getHobbyList();
+//			model.addAttribute("getHobbyList", getHobbyList);
+//			map.put("getHobbyList", getHobbyList);
+//			System.out.println("취미목록 : "+ getHobbyList.size());
+//			// 사용자 취미
+//			List<UserHDto> viewHList = userService.getHobby(userId);
+//			map.put("viewHList", viewHList);
+//			System.out.println("취미리스트 갯수 : " + viewHList.size());
+//			// 나눠서 저장
+//			String hci="";
+//			for(int i=0; i < viewHList.size(); i++) {
+//				hci += viewHList.get(i).getHobbyDto().getH_code_id();
+//			} // viewHList1   viewHList2  
+//			model.addAttribute("hci", hci);
+//			map.put("hci", hci);
+//			System.out.println("hci : "+ hci);
+//		} else {  //검색 했을 때
+//			String searchKeyword_no_s = searchKeyword.replaceAll("\\s", ""); // 공백 제거
+//			// 검색 목록
+//			List<UserDto> searchList = userService.searchUser(searchKeyword_no_s);
+//			model.addAttribute("searchKeyword", searchKeyword_no_s);
+//			map.put("searchKeyword", searchKeyword_no_s);
+//			System.out.println("키워드명 : "+ searchKeyword_no_s);
+//			System.out.println("검색된 목록 갯수 : " + searchList.size());
+//			
+//			// 사용자 정보
+//			if(userId != "") {  //상세정보 눌렀을 때
+//				// 사용자 부서
+//				UserDto view = userService.getView(userId);
+//				model.addAttribute("view", view);
+//				map.put("view", view);
+//				System.out.println("부서 : " + view.getDepDto().getDep_id());
+//				// 부서 목록
+//				List<DepDto> depList = userService.getDepList();
+//				model.addAttribute("depList", depList);
+//				map.put("depList", depList);
+//				// 취미 목록
+//				List<HobbyDto> getHobbyList = userService.getHobbyList();
+//				model.addAttribute("getHobbyList", getHobbyList);
+//				map.put("getHobbyList", getHobbyList);
+//				System.out.println("취미목록 : "+ getHobbyList.size());
+//				// 사용자 취미
+//				List<UserHDto> viewHList = userService.getHobby(userId);
+//				map.put("viewHList", viewHList);
+//				System.out.println("취미리스트 갯수 : " + viewHList.size());
+//				// 나눠서 저장
+//				String hci="";
+//				for(int i=0; i < viewHList.size(); i++) {
+//					hci += viewHList.get(i).getHobbyDto().getH_code_id();
+//				} // viewHList1   viewHList2  
+//				model.addAttribute("hci", hci);
+//				map.put("hci", hci);
+//				System.out.println("hci : "+ hci);
+//			}
+//		}
+//
+//		return map;
 	}
 	
 	// 관리자 포털 상세보기
@@ -304,7 +314,7 @@ public class UserController {
 							newUHDto.setUserDto(newU_Dto);
 
 							// 사용자 취미 수정
-							userService.insertHobby(newUHDto);
+//							userService.insertHobby(newUHDto);
 							//userService.updateUserHobby(dto.getUser_id(), newUHDto);
 						}
 					} else {
@@ -322,7 +332,7 @@ public class UserController {
 						newUHDto.setUserDto(newU_Dto);
 
 						// 사용자 취미 수정
-						userService.insertHobby(newUHDto);
+//						userService.insertHobby(newUHDto);
 						//userService.updateUserHobby(dto.getUser_id(), newUHDto);
 					}
 				}

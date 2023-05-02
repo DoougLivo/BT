@@ -51,8 +51,22 @@ public class UserService {
 		return hobbyDao.findAllOrderByAsc();
 	}
 	
-	public void insertHobby(UserHDto hDto) {
-		userHDao.save(hDto);
+	public void insertHobby(String h_code_id, String userId) {
+		UserHDto hDto = new UserHDto();
+		HobbyDto hobby = new HobbyDto();
+		UserDto dto = new UserDto();
+		System.out.println("5");
+//		hDto.setH_code_id(h_code_id);
+		hDto.setHobbyDto(hobby);
+		hDto.getHobbyDto().setH_code_id(h_code_id);
+		System.out.println("6");
+		
+		hDto.setUserDto(dto);
+		hDto.setUserId(userId);
+		hDto.getUserDto().setUserId(userId);
+		System.out.println("7");
+		userHDao.save(hDto);    // 이게 안되
+		System.out.println("8");
 	}
 	
 	public void deleteHobby(UserHDtoPK pk) {
